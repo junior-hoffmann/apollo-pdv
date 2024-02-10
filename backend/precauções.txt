@@ -1,0 +1,1 @@
+Para reduzir o estoque, o back end vai diminuir para evitar algum ataque

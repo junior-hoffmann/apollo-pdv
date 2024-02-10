@@ -1,0 +1,13 @@
+
+
+Modelo Json para o produto
+[{
+  "code" : "4",
+  "barCode": "7898186210111",
+  "description" : "Coca Cola 2L",
+  "costPrice" : 4,
+  "salePrice" : 8,
+  "stock" : 25,
+}]
+
+ 
