@@ -17,128 +17,119 @@ class SalesTableReport extends StatefulWidget {
 }
 
 class _SalesTableReportState extends State<SalesTableReport> {
-  final AppTheme _theme = AppTheme();
-
   @override
   Widget build(BuildContext context) {
     double fontSize =
         MediaQuery.of(context).size.width * AppTheme().tableFontSize;
-    return Container(
-        width: MediaQuery.of(context).size.width * 0.55,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: _theme.borderColor),
-            borderRadius: const BorderRadius.all(Radius.circular(8))),
-        child: SingleChildScrollView(
-          child: DataTable(
-            columnSpacing: 2,
-            showCheckboxColumn: false,
-            columns: [
-              DataColumn(
-                label: Text(
-                  "Nº",
-                  style: TextStyle(
-                    fontSize: fontSize,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  "Qtd. de itens",
-                  style: TextStyle(
-                    fontSize: fontSize,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  "Forma de pagamento",
-                  style: TextStyle(
-                    fontSize: fontSize,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  "Total da venda",
-                  style: TextStyle(
-                    fontSize: fontSize,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  "Lucro",
-                  style: TextStyle(
-                    fontSize: fontSize,
-                  ),
-                ),
-              ),
-            ],
-            rows: List.generate(
-              widget.sales.length,
-              (index) => DataRow(
-                onSelectChanged: (_) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            SaleScreen(sale: widget.sales[index]),
-                      ));
-                },
-                cells: [
-                  DataCell(
-                    Text(
-                      (index + 1).toString(),
-                      style: TextStyle(
-                        fontSize: fontSize,
-                      ),
-                    ),
-                  ),
-                  DataCell(
-                    Text(
-                      _sumItens(
-                          products: widget.sales[index].getSale()["products"]),
-                      style: TextStyle(
-                        fontSize: fontSize,
-                      ),
-                    ),
-                  ),
-                  DataCell(
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: Text(
-                        paymentForm(
-                            paymentForm:
-                                widget.sales[index].getSale()["paymentForm"]),
-                        style: TextStyle(
-                          fontSize: fontSize,
-                        ),
-                      ),
-                    ),
-                  ),
-                  DataCell(
-                    Text(
-                      Formatters().formatMoneyBRL(
-                          value: widget.sales[index].getSale()["total"]
-                              ["total"]),
-                      style: TextStyle(
-                        fontSize: fontSize,
-                      ),
-                    ),
-                  ),
-                  DataCell(Text(
-                    Formatters().formatMoneyBRL(
-                        value: widget.sales[index].getSale()["profit"]),
-                    style: TextStyle(
-                      fontSize: fontSize,
-                    ),
-                  )),
-                ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: DataTable(
+        columnSpacing: 2,
+        showCheckboxColumn: false,
+        columns: [
+          DataColumn(
+            label: Text(
+              "Nº",
+              style: TextStyle(
+                fontSize: fontSize,
               ),
             ),
           ),
-        ));
+          DataColumn(
+            label: Text(
+              "Qtd. de itens",
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              "Forma de pagamento",
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              "Total da venda",
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              "Lucro",
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+            ),
+          ),
+        ],
+        rows: List.generate(
+          widget.sales.length,
+          (index) => DataRow(
+            onSelectChanged: (_) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SaleScreen(sale: widget.sales[index]),
+                  ));
+            },
+            cells: [
+              DataCell(
+                Text(
+                  (index + 1).toString(),
+                  style: TextStyle(
+                    fontSize: fontSize,
+                  ),
+                ),
+              ),
+              DataCell(
+                Text(
+                  _sumItens(
+                      products: widget.sales[index].getSale()["products"]),
+                  style: TextStyle(
+                    fontSize: fontSize,
+                  ),
+                ),
+              ),
+              DataCell(
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  child: Text(
+                    paymentForm(
+                        paymentForm:
+                            widget.sales[index].getSale()["paymentForm"]),
+                    style: TextStyle(
+                      fontSize: fontSize,
+                    ),
+                  ),
+                ),
+              ),
+              DataCell(
+                Text(
+                  Formatters().formatMoneyBRL(
+                      value: widget.sales[index].getSale()["total"]["total"]),
+                  style: TextStyle(
+                    fontSize: fontSize,
+                  ),
+                ),
+              ),
+              DataCell(Text(
+                Formatters().formatMoneyBRL(
+                    value: widget.sales[index].getSale()["profit"]),
+                style: TextStyle(
+                  fontSize: fontSize,
+                ),
+              )),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   String _sumItens({required List<ProductSold> products}) {

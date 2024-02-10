@@ -1,7 +1,9 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:apollo_pdv/models/sale.dart';
+import 'package:apollo_pdv/models/report.dart';
 import 'package:apollo_pdv/providers/sales_provider.dart';
+import 'package:apollo_pdv/screens/reports/widgets/analytics_payments.dart';
+import 'package:apollo_pdv/screens/reports/widgets/analytics_report.dart';
 import 'package:apollo_pdv/screens/reports/widgets/sales_table_report.dart';
 import 'package:apollo_pdv/screens/widgets/title_row.dart';
 import 'package:apollo_pdv/utils/theme.dart';
@@ -12,8 +14,6 @@ class FastReportScreen extends StatelessWidget {
   FastReportScreen({super.key});
 
   final AppTheme _theme = AppTheme();
-
-  List<Sale> sales = [];
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +70,20 @@ class FastReportScreen extends StatelessWidget {
                     ),
                   );
                 } else {
-                  
+                  Report report = Report(sales: snapshot.requireData);
+
                   return SingleChildScrollView(
                     child: Column(
                       children: [
                         const TitleRow(
                             title: "Relatório Rápido", color: Colors.black),
+                        AnalyticsReport(report: report),
+                        const TitleRow(
+                            title: "Métodos de pagamentos",
+                            color: Colors.black),
+                        AnalyticsPayments(report: report),
+                        const TitleRow(title: "Histórico", color: Colors.black),
                         SalesTableReport(sales: snapshot.requireData),
-                        
                       ],
                     ),
                   );

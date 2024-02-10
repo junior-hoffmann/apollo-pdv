@@ -21,7 +21,7 @@ class TitleRow extends StatelessWidget {
             style: TextStyle(
               color: color,
               fontWeight: FontWeight.w400,
-              fontSize: 24,
+              fontSize: MediaQuery.of(context).size.width * 0.03,
             ),
           ),
         )
