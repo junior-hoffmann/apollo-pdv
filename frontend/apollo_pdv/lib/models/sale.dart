@@ -12,11 +12,11 @@ class Sale {
   double _totalWithoutDiscount = 0;
 
   Sale(
-      {required DateTime date,
+      {required String dateIso,
       required List<ProductSold> products,
       required double discount,
       required Map<String, double> paymentForm}) {
-    _date = date;
+    _date = DateTime.parse(dateIso);
     _products = products;
     _discount = discount;
     _paymentForm = paymentForm;

@@ -458,7 +458,7 @@ class _PdvScreenState extends State<PdvScreen> {
         code: selectedProduct.getCode(),
         description: selectedProduct.getDescription(),
         costPrice: selectedProduct.getCostPrice(),
-        barCode: selectedProduct.getCode(),
+        barCode: selectedProduct.getBarCode(),
         salePrice: selectedProduct.getSalePrice(),
         amount: selectedAmount);
 

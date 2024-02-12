@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:apollo_pdv/models/sale.dart';
+import 'package:apollo_pdv/providers/sales_provider.dart';
+import 'package:apollo_pdv/screens/reports/report_screen.dart';
 import 'package:apollo_pdv/screens/sales/sale_screen.dart';
 import 'package:apollo_pdv/screens/widgets/input.dart';
 import 'package:apollo_pdv/screens/widgets/snackbar.dart';
@@ -8,6 +10,7 @@ import 'package:apollo_pdv/screens/widgets/title_row.dart';
 import 'package:apollo_pdv/utils/formaters.dart';
 import 'package:apollo_pdv/utils/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SalesHeader extends StatefulWidget {
   SalesHeader(
@@ -214,7 +217,41 @@ class _SalesHeaderState extends State<SalesHeader> {
                   height: 50,
                   width: (MediaQuery.of(context).size.width - 96) / 5,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      DateTime firstDate = DateTime(
+                          widget.date["inicial"].year,
+                          widget.date["inicial"].month,
+                          widget.date["inicial"].day,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0);
+
+                      DateTime lastDate = DateTime(
+                          widget.date["final"].year,
+                          widget.date["final"].month,
+                          widget.date["final"].day,
+                          23,
+                          59,
+                          59,
+                          999,
+                          999);
+
+                      Provider.of<SalesProvider>(context, listen: false)
+                          .getFilteredSales(
+                              firstDateISO: firstDate.toIso8601String(),
+                              lastDateString: lastDate.toIso8601String())
+                          .then(
+                            (sales) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ReportScreen(sales: sales),
+                              ),
+                            ),
+                          );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _theme.secondaryColor,
                       shadowColor: Colors.transparent,

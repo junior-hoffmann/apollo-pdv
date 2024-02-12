@@ -47,7 +47,53 @@ class SalesProvider extends ChangeNotifier {
       var data = json.decode(response.body);
       for (var item in data) {
         Sale sale = Sale(
-            date: DateTime.parse(item["date"]),
+            dateIso: item["date"],
+            products: [],
+            discount: double.parse(item["discount"].toString()),
+            paymentForm: {
+              "money": double.parse(item["paymentForm"]["money"].toString()),
+              "creditCard":
+                  double.parse(item["paymentForm"]["creditCard"].toString()),
+              "debitCard":
+                  double.parse(item["paymentForm"]["debitCard"].toString()),
+              "pix": double.parse(item["paymentForm"]["pix"].toString()),
+              "check": double.parse(item["paymentForm"]["check"].toString()),
+            });
+
+        sale.setSerialCode(serialCode: item["serialCode"].toString());
+
+        var products = item["products"];
+        for (var product in products) {
+          sale.setProduct(
+            product: ProductSold(
+                code: product["code"].toString(),
+                barCode: product["barCode"].toString(),
+                description: product["description"].toString(),
+                costPrice: double.parse(product["costPrice"].toString()),
+                salePrice: double.parse(product["salePrice"].toString()),
+                amount: int.parse(product["amount"].toString())),
+          );
+        }
+        todaySales.add(sale);
+      }
+      return todaySales;
+    } catch (e) {
+      print("Houve um erro no Sales Provider: $e");
+      return [];
+    }
+  }
+
+  Future<List<Sale>> getFilteredSales({required String firstDateISO, required String lastDateString}) async {
+    List<Sale> todaySales = [];
+
+    String url = "$server/admin/vendas/vendas-filtradas/$firstDateISO/$lastDateString";
+
+    try {
+      var response = await http.get(Uri.parse(url));
+      var data = json.decode(response.body);
+      for (var item in data) {
+        Sale sale = Sale(
+            dateIso: item["date"],
             products: [],
             discount: double.parse(item["discount"].toString()),
             paymentForm: {
@@ -91,7 +137,7 @@ class SalesProvider extends ChangeNotifier {
       var data = json.decode(response.body);
       for (var item in data) {
         Sale sale = Sale(
-            date: DateTime.parse(item["date"]),
+            dateIso: item["date"],
             products: [],
             discount: double.parse(item["discount"].toString()),
             paymentForm: {

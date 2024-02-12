@@ -37,6 +37,14 @@ class _SalesTableReportState extends State<SalesTableReport> {
           ),
           DataColumn(
             label: Text(
+              "Data e hora",
+              style: TextStyle(
+                fontSize: fontSize,
+              ),
+            ),
+          ),
+          DataColumn(
+            label: Text(
               "Qtd. de itens",
               style: TextStyle(
                 fontSize: fontSize,
@@ -82,6 +90,14 @@ class _SalesTableReportState extends State<SalesTableReport> {
               DataCell(
                 Text(
                   (index + 1).toString(),
+                  style: TextStyle(
+                    fontSize: fontSize,
+                  ),
+                ),
+              ),
+              DataCell(
+                Text(
+                  widget.sales[index].getSale()["date"],
                   style: TextStyle(
                     fontSize: fontSize,
                   ),

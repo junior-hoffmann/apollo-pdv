@@ -33,7 +33,7 @@ class FinalizeSaleButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         Sale sale = Sale(
-          date: DateTime.now(),
+          dateIso: DateTime.now().toIso8601String(),
           products: products,
           discount: discount,
           paymentForm: {

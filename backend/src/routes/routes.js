@@ -17,7 +17,7 @@ routes.delete("/admin/produtos/excluir-produto/:id", productsController.deletePr
 // VENDAS
 routes.post("/admin/vendas/nova-venda", salesController.setNewSale)
 routes.get("/admin/vendas/todas-as-vendas/", salesController.getAllSales)
-routes.get("/admin/vendas/vendas-filtradas/:date", salesController.getFilteredSales)
+routes.get("/admin/vendas/vendas-filtradas/:firstdate/:lastdate?", salesController.getFilteredSales)
 
 // TAREFAS
 routes.post("/admin/tarefas/nova-tarefa", tasksController.setNewTask)
