@@ -3,6 +3,7 @@
 import 'package:apollo_pdv/models/product_sold.dart';
 import 'package:apollo_pdv/models/sale.dart';
 import 'package:apollo_pdv/screens/sales/widgets/payment_card.dart';
+import 'package:apollo_pdv/screens/teste_screen.dart';
 import 'package:apollo_pdv/screens/widgets/title_row.dart';
 import 'package:apollo_pdv/utils/formaters.dart';
 import 'package:apollo_pdv/utils/theme.dart';
@@ -33,7 +34,9 @@ class SaleScreen extends StatelessWidget {
         actions: [
           IconButton(
               iconSize: 50,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => TesteScreen(sale: sale),));
+              },
               icon: Image.asset("images/icons/pdf.png"))
         ],
       ),

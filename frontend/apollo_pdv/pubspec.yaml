@@ -41,6 +41,10 @@ dependencies:
   sqflite: ^2.3.0
   sqflite_common_ffi: ^2.3.2
   http: ^1.1.2
+  printing: 5.11.1
+  pdf: ^3.10.7
+  # pdf_viewer_plugin: ^2.0.1
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

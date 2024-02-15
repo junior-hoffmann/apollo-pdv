@@ -3,7 +3,7 @@ const Sale = require('../models/sale')
 const Product = require("../models/product")
 
 
-async function  reduceStock(barCode, amount) {
+async function reduceStock(barCode, amount) {
     await Product.findOneAndUpdate({ barCode: barCode }, { $inc: { stock: -amount } })
 }
 
@@ -16,14 +16,6 @@ module.exports = {
             let products = req.body["products"]
             await products.forEach(p => {
                 reduceStock(p["barCode"], p["amount"])
-                // Product.find({ barCode: p["barCode"] }).then(doc => {
-                //     Product.findByIdAndUpdate({ _id: doc[0]["_id"] }, { $inc: { stock: -p["amount"] } })
-                //     console.log(doc[0]["_id"])
-                //     console.log(p["amount"])
-                // })
-                // Product.findOneAndUpdate({ barCode: p["barCode"] }, { $inc: { stock: -(p["amount"]) } })
-                // Product.findByIdAndUpdate({ _id: product._id }, { $inc: { stock: -p["amount"] } })
-                // console.log(product)
             });
 
             res.sendStatus(200)
