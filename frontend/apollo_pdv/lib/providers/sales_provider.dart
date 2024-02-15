@@ -2,8 +2,10 @@
 
 import 'dart:convert';
 
+import 'package:apollo_pdv/models/company.dart';
 import 'package:apollo_pdv/models/product_sold.dart';
 import 'package:apollo_pdv/models/sale.dart';
+import 'package:apollo_pdv/pdfs/sale_ticket.dart';
 import 'package:apollo_pdv/utils/formaters.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -24,6 +26,21 @@ class SalesProvider extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         getSales();
+        try {
+          // TODO adicionar o provider de company
+          Company company = Company(
+              name: "JR Informática",
+              address: {
+                "street": "Rua Tristão de Oliveira",
+                "number": "759",
+                "neighborhood": "Floresta",
+                "city": "Gramado",
+                "uf": "RS",
+              },
+              cnpj: "12.123.321/0001-69",
+              phone: "(54) 9 9682 - 1658");
+           SaleTicket(sale: sale, company: company).getAndPrintPdf();
+        } catch (_) {}
         return true;
       } else {
         return false;
@@ -83,10 +100,12 @@ class SalesProvider extends ChangeNotifier {
     }
   }
 
-  Future<List<Sale>> getFilteredSales({required String firstDateISO, required String lastDateString}) async {
+  Future<List<Sale>> getFilteredSales(
+      {required String firstDateISO, required String lastDateString}) async {
     List<Sale> todaySales = [];
 
-    String url = "$server/admin/vendas/vendas-filtradas/$firstDateISO/$lastDateString";
+    String url =
+        "$server/admin/vendas/vendas-filtradas/$firstDateISO/$lastDateString";
 
     try {
       var response = await http.get(Uri.parse(url));

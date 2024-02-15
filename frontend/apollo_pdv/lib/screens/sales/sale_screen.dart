@@ -1,11 +1,16 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:typed_data';
+
+import 'package:apollo_pdv/models/company.dart';
 import 'package:apollo_pdv/models/product_sold.dart';
 import 'package:apollo_pdv/models/sale.dart';
+import 'package:apollo_pdv/pdfs/sale_ticket.dart';
 import 'package:apollo_pdv/screens/sales/widgets/payment_card.dart';
 import 'package:apollo_pdv/screens/teste_screen.dart';
 import 'package:apollo_pdv/screens/widgets/title_row.dart';
 import 'package:apollo_pdv/utils/formaters.dart';
+import 'package:apollo_pdv/utils/print_ticket.dart';
 import 'package:apollo_pdv/utils/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +40,22 @@ class SaleScreen extends StatelessWidget {
           IconButton(
               iconSize: 50,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TesteScreen(sale: sale),));
+             
+                // TODO fazer o provider de company
+                Company company = Company(
+                    name: "JR Informática",
+                    address: {
+                      "street": "Rua Tristão de Oliveira",
+                      "number": "759",
+                      "neighborhood": "Floresta",
+                      "city": "Gramado",
+                      "uf": "RS",
+                    },
+                    cnpj: "12.123.321/0001-69",
+                    phone: "(54) 9 9682 - 1658");
+            
+                SaleTicket(sale: sale, company: company).getAndPrintPdf();
+                
               },
               icon: Image.asset("images/icons/pdf.png"))
         ],
@@ -49,7 +69,7 @@ class SaleScreen extends StatelessWidget {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top:8,  left: 32),
+                  padding: const EdgeInsets.only(top: 8, left: 32),
                   child: Text(
                     "Data e hora da venda: ${sale.getSale()["date"]}",
                     style: TextStyle(
