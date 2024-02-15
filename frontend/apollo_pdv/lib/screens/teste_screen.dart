@@ -31,11 +31,14 @@ class _TesteScreenState extends State<TesteScreen> {
       appBar: AppBar(
         title: const Text("Gerador de ticket"),
       ),
-      body: Center(
-        child: PdfPreview(
-          dpi: 600,
-          build: (format) =>
-              SaleTicket(sale: widget.sale, company: widget.company).getPdf(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: PdfPreview(
+            dpi: 600,
+            build: (format) =>
+                SaleTicket(sale: widget.sale, company: widget.company).getPdf(),
+          ),
         ),
       ),
     );
