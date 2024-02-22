@@ -51,7 +51,8 @@ class FinalizeBottonBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              total == 0
+              // total == 0
+              isZero(total)
                   ? Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Row(
@@ -126,5 +127,9 @@ class FinalizeBottonBar extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  bool isZero(double number, {double epsilon = 1e-10}) {
+    return (number.abs() - 0).abs() < epsilon;
   }
 }

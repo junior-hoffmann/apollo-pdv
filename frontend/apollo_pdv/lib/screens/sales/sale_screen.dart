@@ -1,16 +1,11 @@
 // ignore_for_file: must_be_immutable
-
-import 'dart:typed_data';
-
 import 'package:apollo_pdv/models/company.dart';
 import 'package:apollo_pdv/models/product_sold.dart';
 import 'package:apollo_pdv/models/sale.dart';
 import 'package:apollo_pdv/pdfs/sale_ticket.dart';
 import 'package:apollo_pdv/screens/sales/widgets/payment_card.dart';
-import 'package:apollo_pdv/screens/teste_screen.dart';
 import 'package:apollo_pdv/screens/widgets/title_row.dart';
 import 'package:apollo_pdv/utils/formaters.dart';
-import 'package:apollo_pdv/utils/print_ticket.dart';
 import 'package:apollo_pdv/utils/theme.dart';
 import 'package:flutter/material.dart';
 

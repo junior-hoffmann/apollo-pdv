@@ -37,9 +37,9 @@ class Sale {
         }
       };
 
-  double _getProfit(){
+  double _getProfit() {
     double cost = 0;
-    for(ProductSold product in _products){
+    for (ProductSold product in _products) {
       cost += product.getCostPrice() * product.getAmount();
     }
     return _totalWithoutDiscount - _discount - cost;

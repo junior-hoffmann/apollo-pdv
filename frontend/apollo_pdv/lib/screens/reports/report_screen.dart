@@ -5,6 +5,7 @@ import 'package:apollo_pdv/models/sale.dart';
 import 'package:apollo_pdv/screens/reports/widgets/analytics_payments.dart';
 import 'package:apollo_pdv/screens/reports/widgets/analytics_report.dart';
 import 'package:apollo_pdv/screens/reports/widgets/sales_table_report.dart';
+import 'package:apollo_pdv/screens/reports/view_report_screen.dart';
 import 'package:apollo_pdv/screens/widgets/title_row.dart';
 import 'package:apollo_pdv/utils/theme.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,33 @@ class ReportScreen extends StatelessWidget {
         actions: [
           IconButton(
             iconSize: 50,
-            onPressed: () {},
+            onPressed: () {
+              
+              // Company company = Company(
+              //     name: "JR Informática",
+              //     address: {
+              //       "street": "Rua Tristão de Oliveira",
+              //       "number": "759",
+              //       "neighborhood": "Floresta",
+              //       "city": "Gramado",
+              //       "uf": "RS",
+              //     },
+              //     cnpj: "12.123.321/0001-69",
+              //     phone: "(54) 9 9682 - 1658");
+              // ReportSheet(report: report, company: company).getSheet();
+            },
+            icon: Image.asset("images/icons/folhas.png"),
+          ),
+          IconButton(
+            iconSize: 50,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ViewReportScreen(report: report),
+                ),
+              );
+            },
             icon: Image.asset("images/icons/pdf.png"),
           ),
         ],

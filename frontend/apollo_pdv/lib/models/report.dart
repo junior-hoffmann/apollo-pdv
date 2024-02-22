@@ -1,3 +1,4 @@
+import 'package:apollo_pdv/models/product_sold.dart';
 import 'package:apollo_pdv/models/sale.dart';
 
 class Report {
@@ -27,6 +28,41 @@ class Report {
     }
 
     return total;
+  }
+
+  List<ProductSold> getSaledProducts() {
+    List<ProductSold> allProductsSold = [];
+    List<ProductSold> products = [];
+
+    for (Sale sale in _sales) {
+      allProductsSold.addAll(sale.getSale()["products"]);
+    }
+
+    for (ProductSold product in allProductsSold) {
+      bool found = false;
+
+      for (int i = 0; i < products.length; i++) {
+        if (products[i].getBarCode() == product.getBarCode()) {
+          products[i].updateAmount(
+              newAmount: products[i].getAmount() + product.getAmount());
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        products.add(ProductSold(
+          code: product.getCode(),
+          barCode: product.getBarCode(),
+          description: product.getDescription(),
+          costPrice: product.getCostPrice(),
+          salePrice: product.getSalePrice(),
+          amount: product.getAmount(),
+        ));
+      }
+    }
+
+    return products;
   }
 
   Map<String, double> getPayments() {

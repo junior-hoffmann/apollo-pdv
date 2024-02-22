@@ -203,4 +203,5 @@ class SaleTicket {
     Uint8List pdfToPrint = await pdf.save().then((value) => value);
     PrintTicket(pdf: pdfToPrint);
   }
+
 }
