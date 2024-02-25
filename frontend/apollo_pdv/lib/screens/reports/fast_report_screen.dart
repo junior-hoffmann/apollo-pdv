@@ -28,13 +28,6 @@ class FastReportScreen extends StatelessWidget {
             "images/logo/logo_apollo_pdv.png",
           ),
         ),
-        actions: [
-          IconButton(
-            iconSize: 50,
-            onPressed: () {},
-            icon: Image.asset("images/icons/pdf.png"),
-          ),
-        ],
       ),
       body: FutureBuilder(
         future: Provider.of<SalesProvider>(context).getTodaySales(),

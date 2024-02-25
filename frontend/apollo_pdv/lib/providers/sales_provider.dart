@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
 
@@ -16,7 +16,7 @@ class SalesProvider extends ChangeNotifier {
   final List<Sale> _sales = [];
   List<Sale> get sales => [..._sales];
 
-  Future<bool> setNewSale({required Sale sale}) async {
+  Future<bool> setNewSale({required Sale sale, required BuildContext context}) async {
     String url = "$server/admin/vendas/nova-venda";
     try {
       var response = await http.post(
@@ -39,7 +39,7 @@ class SalesProvider extends ChangeNotifier {
               },
               cnpj: "12.123.321/0001-69",
               phone: "(54) 9 9682 - 1658");
-           SaleTicket(sale: sale, company: company).getAndPrintPdf();
+           SaleTicket(sale: sale, company: company, context: context).getAndPrintPdf();
         } catch (_) {}
         return true;
       } else {

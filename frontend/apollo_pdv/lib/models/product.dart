@@ -37,7 +37,7 @@ class Product {
       _description = description;
   void setCostPrice({required double costPrice}) => _costPrice = costPrice;
   void setSalePrice({required double salePrice}) => _salePrice = salePrice;
-  void setStock({required int amount}) => _stock;
+  void setStock({required int amount}) => _stock = amount;
 
   void updateStock({required int amount}) =>
       _stock > 0 && _stock > amount ? _stock -= amount : _stock = 0;

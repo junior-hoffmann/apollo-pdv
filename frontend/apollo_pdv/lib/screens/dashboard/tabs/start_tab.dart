@@ -186,31 +186,29 @@ class StartTab extends StatelessWidget {
                         ),
                       ),
                     )
-                  : Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 32,
-                          right: 32,
-                          bottom: 8,
-                          top: 8,
-                        ),
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          padding: const EdgeInsets.only(top: 10),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 3 / 2,
-                            crossAxisSpacing: 2,
-                            mainAxisSpacing: 10,
-                          ),
-                          itemCount: tasks.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              PostitCard(task: tasks[index]),
-                        ),
-                      ),
+                  : Padding(
+                    padding: const EdgeInsets.only(
+                      left: 32,
+                      right: 32,
+                      bottom: 8,
+                      top: 8,
                     ),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      padding: const EdgeInsets.only(top: 10),
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 3 / 2,
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: tasks.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          PostitCard(task: tasks[index]),
+                    ),
+                  ),
             ],
           ),
         ),

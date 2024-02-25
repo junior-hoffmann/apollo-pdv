@@ -4,6 +4,7 @@ import 'package:apollo_pdv/models/product_sold.dart';
 import 'package:apollo_pdv/models/sale.dart';
 import 'package:apollo_pdv/utils/formaters.dart';
 import 'package:apollo_pdv/utils/print_ticket.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,8 +12,10 @@ import 'package:pdf/widgets.dart' as pw;
 class SaleTicket {
   Sale sale;
   Company company;
+  BuildContext context;
 
-  SaleTicket({required this.sale, required this.company});
+  SaleTicket(
+      {required this.sale, required this.company, required this.context});
 
   void getAndPrintPdf() async {
     List<ProductSold> products = sale.getSale()["products"];
@@ -194,14 +197,13 @@ class SaleTicket {
                 height: 30,
                 child: pw.Text(""),
               ),
-               pw.Divider(thickness: 0.4),
+              pw.Divider(thickness: 0.4),
             ],
           ); // Center
         },
       ),
     );
     Uint8List pdfToPrint = await pdf.save().then((value) => value);
-    PrintTicket(pdf: pdfToPrint);
+    PrintTicket(pdf: pdfToPrint, context: context);
   }
-
 }

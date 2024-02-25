@@ -56,7 +56,7 @@ class FinalizeSaleButton extends StatelessWidget {
         );
 
         Provider.of<SalesProvider>(context, listen: false)
-            .setNewSale(sale: sale)
+            .setNewSale(sale: sale, context: context)
             .then((value) {
           if (value) {
             Navigator.push(
