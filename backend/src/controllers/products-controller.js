@@ -35,14 +35,6 @@ module.exports = {
     async editProduct(req, res) {
         let id = req.params.id
         let product = req.body
-        // if (id) {
-        //     product.code = req.body[0].code
-        //     product.barCode = req.body[0].barCode
-        //     product.description = req.body[0].description
-        //     product.costPrice = req.body[0].costPrice
-        //     product.salePrice = req.body[0].salePrice
-        //     product.stock = req.body[0].stock
-        // } else {
         if (!id) {
             res.send("Não tem _ID")
         }
@@ -52,7 +44,6 @@ module.exports = {
         } catch (error) {
             res.send(error)
         }
-        // editProduct(_id) : void
     },
 
     async deleteProduct(req, res) {
@@ -63,7 +54,6 @@ module.exports = {
         } catch (error) {
             res.send(error)
         }
-        // deleteProduct(cod) : void
     },
 
     async setStock(req, res) {
@@ -87,7 +77,6 @@ module.exports = {
         } else {
             return res.send("Não foi possível realizar a operação. Digite um valor maior que zero!")
         }
-        // setStock(cod, double) : void
     },
 
     async reduceStock(req, res) {
@@ -111,6 +100,5 @@ module.exports = {
         } else {
             res.send("Houve um erro desconhecido!")
         }
-        // reduceProduct(cod, double) :void
     },
 }

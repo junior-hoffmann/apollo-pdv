@@ -1,3 +1,4 @@
+import 'package:apollo_pdv/providers/company_provider.dart';
 import 'package:apollo_pdv/providers/products_provider.dart';
 import 'package:apollo_pdv/providers/sales_provider.dart';
 import 'package:apollo_pdv/providers/tasks_provider.dart';
@@ -41,6 +42,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ProductsProvider()),
         ChangeNotifierProvider(create: (context) => SalesProvider()),
         ChangeNotifierProvider(create: (context) => TasksProvider()),
+        ChangeNotifierProvider(create: (context) => CompanyProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

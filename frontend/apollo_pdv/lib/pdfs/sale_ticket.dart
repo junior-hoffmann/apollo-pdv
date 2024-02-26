@@ -1,23 +1,28 @@
 // import 'dart:typed_data';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:apollo_pdv/models/company.dart';
 import 'package:apollo_pdv/models/product_sold.dart';
 import 'package:apollo_pdv/models/sale.dart';
+import 'package:apollo_pdv/providers/company_provider.dart';
 import 'package:apollo_pdv/utils/formaters.dart';
 import 'package:apollo_pdv/utils/print_ticket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:provider/provider.dart';
 
 class SaleTicket {
   Sale sale;
-  Company company;
+
   BuildContext context;
 
-  SaleTicket(
-      {required this.sale, required this.company, required this.context});
+  SaleTicket({required this.sale, required this.context});
 
   void getAndPrintPdf() async {
+    var provider = Provider.of<CompanyProvider>(context);
+    Company company = provider.company();
     List<ProductSold> products = sale.getSale()["products"];
 
     final pdf = pw.Document();
@@ -34,46 +39,62 @@ class SaleTicket {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      company.getName(),
-                      style: pw.TextStyle(
-                          fontSize: 12, fontWeight: pw.FontWeight.bold),
-                    ),
-                    pw.Text(
-                      "${company.getAddress()["street"]},${company.getAddress()["number"]}, B. ${company.getAddress()["neighborhood"]}. ${company.getAddress()["city"]} - ${company.getAddress()["uf"]}",
-                      style: pw.TextStyle(
-                        fontSize: 8,
-                        fontWeight: pw.FontWeight.normal,
-                      ),
-                    ),
-                    pw.Padding(
-                      padding: const pw.EdgeInsets.only(top: 4),
-                      child: pw.Text(
-                        "Contato: ${company.getPhone()}",
-                        style: pw.TextStyle(
-                          fontSize: 8,
-                          fontWeight: pw.FontWeight.normal,
+              company.getName().isNotEmpty
+                  ? pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Text(
+                          company.getName(),
+                          style: pw.TextStyle(
+                              fontSize: 12, fontWeight: pw.FontWeight.bold),
                         ),
-                      ),
+                        pw.Text(
+                          "${company.getAddress()["street"]},${company.getAddress()["number"]}, B. ${company.getAddress()["neighborhood"]}. ${company.getAddress()["city"]} - ${company.getAddress()["uf"]}",
+                          style: pw.TextStyle(
+                            fontSize: 8,
+                            fontWeight: pw.FontWeight.normal,
+                          ),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.only(top: 4),
+                          child: pw.Text(
+                            "Contato: ${company.getPhone()}",
+                            style: pw.TextStyle(
+                              fontSize: 8,
+                              fontWeight: pw.FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                        company.getCNPJ() == "-"
+                            ? pw.SizedBox()
+                            : pw.Text(
+                                "CNPJ: ${company.getCNPJ()}",
+                                style: pw.TextStyle(
+                                  fontSize: 8,
+                                  fontWeight: pw.FontWeight.normal,
+                                ),
+                              ),
+                        pw.Text(
+                          "Realizada em: ${sale.getSale()["date"]}",
+                          style: pw.TextStyle(
+                            fontSize: 8,
+                            fontWeight: pw.FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    )
+                  : pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Text(
+                          "Realizada em: ${sale.getSale()["date"]}",
+                          style: pw.TextStyle(
+                            fontSize: 8,
+                            fontWeight: pw.FontWeight.normal,
+                          ),
+                        ),
+                      ],
                     ),
-                    pw.Text(
-                      "CNPJ: ${company.getCNPJ()}",
-                      style: pw.TextStyle(
-                        fontSize: 8,
-                        fontWeight: pw.FontWeight.normal,
-                      ),
-                    ),
-                    pw.Text(
-                      "Realizada em: ${sale.getSale()["date"]}",
-                      style: pw.TextStyle(
-                        fontSize: 8,
-                        fontWeight: pw.FontWeight.normal,
-                      ),
-                    ),
-                  ]),
               pw.Column(
                   mainAxisAlignment: pw.MainAxisAlignment.center,
                   children: [

@@ -25,7 +25,9 @@ class ReportPdf {
         await rootBundle.load('images/logo/logo_apollo_pdv.png');
     final Uint8List logo = logoByte.buffer.asUint8List();
 
-    body.addAll(HeaderReport().get(company: company));
+    if(company.getName().isNotEmpty){
+      body.addAll(HeaderReport().get(company: company));
+    }
     body.add(
       pw.Column(
         mainAxisAlignment: pw.MainAxisAlignment.center,

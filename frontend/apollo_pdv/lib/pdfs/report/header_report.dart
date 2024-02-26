@@ -26,13 +26,15 @@ class HeaderReport {
             ),
           ),
         ),
-        pw.Text(
-          "CNPJ: ${company.getCNPJ()}",
-          style: pw.TextStyle(
-            fontSize: 12,
-            fontWeight: pw.FontWeight.normal,
-          ),
-        ),
+        company.getCNPJ() == "-"
+            ? pw.SizedBox()
+            : pw.Text(
+                "CNPJ: ${company.getCNPJ()}",
+                style: pw.TextStyle(
+                  fontSize: 12,
+                  fontWeight: pw.FontWeight.normal,
+                ),
+              ),
       ])
     ];
   }

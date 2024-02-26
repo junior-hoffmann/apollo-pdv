@@ -3,6 +3,7 @@
 import 'package:apollo_pdv/models/product.dart';
 import 'package:apollo_pdv/models/sale.dart';
 import 'package:apollo_pdv/models/task.dart';
+import 'package:apollo_pdv/providers/company_provider.dart';
 import 'package:apollo_pdv/providers/products_provider.dart';
 import 'package:apollo_pdv/providers/sales_provider.dart';
 import 'package:apollo_pdv/providers/tasks_provider.dart';
@@ -10,7 +11,9 @@ import 'package:apollo_pdv/screens/dashboard/tabs/products_tab.dart';
 import 'package:apollo_pdv/screens/dashboard/tabs/sales_tab.dart';
 import 'package:apollo_pdv/screens/dashboard/tabs/start_tab.dart';
 import 'package:apollo_pdv/screens/dashboard/tabs/tasks_tab.dart';
+import 'package:apollo_pdv/screens/settings/settings_screen.dart';
 import 'package:apollo_pdv/screens/widgets/navigation_button.dart';
+import 'package:apollo_pdv/screens/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,16 +36,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final productsProvider =
           Provider.of<ProductsProvider>(context, listen: false);
-
       productsProvider.getProducts();
 
       final salesProvider = Provider.of<SalesProvider>(context, listen: false);
-
       salesProvider.getSales();
 
       final tasksProvider = Provider.of<TasksProvider>(context, listen: false);
-
       tasksProvider.getTasks();
+
+      final companyProvider =
+          Provider.of<CompanyProvider>(context, listen: false);
+      companyProvider.getCompany();
     });
   }
 
@@ -70,7 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       TasksTab(tasks: widget.tasks),
     ];
     return Scaffold(
-      backgroundColor: Colors.white ,
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -145,7 +149,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             (MediaQuery.of(context).size.width * 0.75) / 6 - 20,
                         title: "Ajustes",
                         urlImage: "images/icons/definicoes.png",
-                        onTap: () {},
+                        onTap: () {
+                          final companyProvider = Provider.of<CompanyProvider>(
+                              context,
+                              listen: false);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SettingsScreen(
+                                company: companyProvider.company(),
+                              ),
+                            ),
+                          ).then((value) {
+                            try {
+                              if (value) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  Warnings().snackBar(
+                                    value:
+                                        "Dados da loja alterados com sucesso!",
+                                    backgroundColor: Colors.green,
+                                    textColor: Colors.white,
+                                  ),
+                                );
+                              }
+                            } catch (_) {}
+                          });
+                        },
                       ),
                       NavigationButton(
                         isSelected: false,

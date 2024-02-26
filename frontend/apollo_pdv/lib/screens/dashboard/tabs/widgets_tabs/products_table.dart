@@ -110,8 +110,7 @@ class _ProductsTableState extends State<ProductsTable> {
                     );
                     setState(() {
                       widget.productsFiltered =
-                          Provider.of<ProductsProvider>(context,
-                                  listen: false)
+                          Provider.of<ProductsProvider>(context, listen: false)
                               .products;
                     });
                   }
@@ -153,8 +152,7 @@ class _ProductsTableState extends State<ProductsTable> {
                 DataCell(
                   Text(
                     Formatters().formatMoneyBRL(
-                        value:
-                            widget.productsFiltered[index].getCostPrice()),
+                        value: widget.productsFiltered[index].getCostPrice()),
                     style: TextStyle(
                       fontSize: widget.fontSize,
                     ),
@@ -163,8 +161,7 @@ class _ProductsTableState extends State<ProductsTable> {
                 DataCell(
                   Text(
                     Formatters().formatMoneyBRL(
-                        value:
-                            widget.productsFiltered[index].getSalePrice()),
+                        value: widget.productsFiltered[index].getSalePrice()),
                     style: TextStyle(
                       fontSize: widget.fontSize,
                     ),

@@ -31,72 +31,72 @@ class _TasksTabState extends State<TasksTab> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Column(
-              children: [
-                const TitleRow(
-                  title: "Tarefas",
-                  color: Colors.black,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 32, right: 32, top: 8),
-                  child: newTask(context: context),
-                ),
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Column(
+                children: [
+                  const TitleRow(
+                    title: "Tarefas",
+                    color: Colors.black,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, right: 32, top: 8),
+                    child: newTask(context: context),
+                  ),
+                ],
+              ),
             ),
-          ),
-          widget.tasks.isEmpty
-              ? Center(
-                  child: Column(
-                    children: [
-                      Padding(
-                         padding: const EdgeInsets.only(top: 40),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.15,
-                          height: MediaQuery.of(context).size.width * 0.15,
-                          child: Image.asset("images/icons/pasta-vazia.png"),
+            widget.tasks.isEmpty
+                ? Center(
+                    child: Column(
+                      children: [
+                        Padding(
+                           padding: const EdgeInsets.only(top: 40),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.15,
+                            height: MediaQuery.of(context).size.width * 0.15,
+                            child: Image.asset("images/icons/pasta-vazia.png"),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: Text(
-                          "Você está sem lembretes",
-                          style: TextStyle(
-                              color: _theme.primaryColor,
-                              fontSize: MediaQuery.of(context).size.width * 0.03),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text(
+                            "Você está sem lembretes",
+                            style: TextStyle(
+                                color: _theme.primaryColor,
+                                fontSize: MediaQuery.of(context).size.width * 0.03),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  )
+                : Padding(
+                  padding: const EdgeInsets.only(
+                    left: 32,
+                    right: 32,
+                    bottom: 8,
+                    top: 8,
                   ),
-                )
-              : Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 32,
-                      right: 32,
-                      bottom: 8,
-                      top: 8,
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 3 / 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
                     ),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                      ),
-                      itemCount: widget.tasks.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          PostitCard(task: widget.tasks[index]),
-                    ),
+                    itemCount: widget.tasks.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        PostitCard(task: widget.tasks[index]),
                   ),
                 ),
-        ],
+          ],
+        ),
       ),
     );
   }

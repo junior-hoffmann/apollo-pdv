@@ -8,7 +8,6 @@ module.exports = {
             await task.save()
             res.sendStatus(200)
         } catch (error) {
-            console.log(error)
             res.send(false)
         }
     },
@@ -16,7 +15,6 @@ module.exports = {
     async setFinishTask(req, res) {
         try {
             let id = req.body["id"]
-            console.log(id)
             await Task.findByIdAndDelete(id)
             res.sendStatus(200)
         } catch (error) {

@@ -4,6 +4,7 @@ const routes = express.Router()
 const productsController = require("../controllers/products-controller")
 const salesController = require("../controllers/sales-controller")
 const tasksController = require("../controllers/tasks-controller")
+const companyController = require('../controllers/company-controller')
 
 // PRODUTOS
 routes.get("/produtos/todos-os-produtos/", productsController.getAllProducts)
@@ -23,6 +24,10 @@ routes.get("/admin/vendas/vendas-filtradas/:firstdate/:lastdate?", salesControll
 routes.post("/admin/tarefas/nova-tarefa", tasksController.setNewTask)
 routes.get("/admin/tarefas/todas-as-tarefas/", tasksController.getAllTasks)
 routes.post("/admin/tarefas/finalizar-tarefa", tasksController.setFinishTask)
+
+// EMPRESA
+routes.post("/admin/empresa/editar", companyController.setCompany)
+routes.get("/admin/empresa/buscar", companyController.getCompany)
 
 
 module.exports = routes

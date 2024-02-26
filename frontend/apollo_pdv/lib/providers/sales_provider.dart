@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:apollo_pdv/models/company.dart';
 import 'package:apollo_pdv/models/product_sold.dart';
 import 'package:apollo_pdv/models/sale.dart';
 import 'package:apollo_pdv/pdfs/sale_ticket.dart';
@@ -16,7 +15,8 @@ class SalesProvider extends ChangeNotifier {
   final List<Sale> _sales = [];
   List<Sale> get sales => [..._sales];
 
-  Future<bool> setNewSale({required Sale sale, required BuildContext context}) async {
+  Future<bool> setNewSale(
+      {required Sale sale, required BuildContext context}) async {
     String url = "$server/admin/vendas/nova-venda";
     try {
       var response = await http.post(
@@ -27,19 +27,7 @@ class SalesProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         getSales();
         try {
-          // TODO adicionar o provider de company
-          Company company = Company(
-              name: "JR Informática",
-              address: {
-                "street": "Rua Tristão de Oliveira",
-                "number": "759",
-                "neighborhood": "Floresta",
-                "city": "Gramado",
-                "uf": "RS",
-              },
-              cnpj: "12.123.321/0001-69",
-              phone: "(54) 9 9682 - 1658");
-           SaleTicket(sale: sale, company: company, context: context).getAndPrintPdf();
+          SaleTicket(sale: sale, context: context).getAndPrintPdf();
         } catch (_) {}
         return true;
       } else {
