@@ -203,6 +203,18 @@ class SaleTicket {
                         ),
                       ],
                     ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                children: [
+                  pw.Text(
+                    "Obrigado pela preferência. Volte sempre!",
+                    style: pw.TextStyle(
+                      fontSize: 8,
+                      fontWeight: pw.FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
               pw.Divider(thickness: 0.4),
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.center,
