@@ -64,8 +64,8 @@ class FinalizeSaleButton extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => VendaFinalizadaScreen(),
                 )).then((value) {
-              if (value) {
-                Navigator.pop(context, true);
+              if (value.isNotEmpty) {
+                Navigator.pop(context, value);
               }
             });
           } else {

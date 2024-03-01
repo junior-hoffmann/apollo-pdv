@@ -15,13 +15,12 @@ import 'package:provider/provider.dart';
 
 class SaleTicket {
   Sale sale;
-
   BuildContext context;
 
   SaleTicket({required this.sale, required this.context});
 
   void getAndPrintPdf() async {
-    var provider = Provider.of<CompanyProvider>(context);
+    var provider = Provider.of<CompanyProvider>(context, listen: false);
     Company company = provider.company();
     List<ProductSold> products = sale.getSale()["products"];
 
@@ -237,6 +236,6 @@ class SaleTicket {
       ),
     );
     Uint8List pdfToPrint = await pdf.save().then((value) => value);
-    PrintTicket(pdf: pdfToPrint, context: context);
+    PrintTicket(pdf: pdfToPrint);
   }
 }

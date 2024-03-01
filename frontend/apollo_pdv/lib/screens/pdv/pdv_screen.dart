@@ -181,19 +181,6 @@ class _PdvScreenState extends State<PdvScreen> {
                         borderRadius:
                             BorderRadius.circular(_theme.borderRadius)),
                   ),
-                  // onPressed: () async {
-                  //   bool estaFinalizadaAVenda = await Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) =>
-                  //           FinalizarVendaScreen(produtos: selectedProducts),
-                  //     ),
-                  //   );
-
-                  //   if (estaFinalizadaAVenda) {
-                  //     Navigator.pop(context);
-                  //   }
-                  // },
                   onPressed: () async {
                     if (selectedProducts.isNotEmpty) {
                       Navigator.push(
@@ -203,17 +190,25 @@ class _PdvScreenState extends State<PdvScreen> {
                               FinalizarVendaScreen(products: selectedProducts),
                         ),
                       ).then((value) {
-                        if (value) {
+                        if (value["action"] == "home") {
                           Navigator.pop(context);
+                        } else {
+                          setState(() {
+                            codeController.clear();
+                            codeFocus.requestFocus();
+                            selectedProducts.clear();
+                            total = 0;
+                            selectedAmount = 1;
+                          });
                         }
                       });
-                    }else{
+                    } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                      Warnings().snackBar(
-                          value: "Adicione algum produto para prosseguir!",
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white),
-                    );
+                        Warnings().snackBar(
+                            value: "Adicione algum produto para prosseguir!",
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white),
+                      );
                     }
                   },
                   child: const Text(
@@ -261,26 +256,6 @@ class _PdvScreenState extends State<PdvScreen> {
                   )
                 ],
               ),
-              // Row(
-              //   children: [
-              //     const Text(
-              //       "Total = ",
-              //       style: TextStyle(
-              //         fontSize: 32,
-              //         fontWeight: FontWeight.bold,
-              //         color: Colors.red,
-              //       ),
-              //     ),
-              //     Text(
-              //       Moeda(valor: total).toBRL(),
-              //       style: const TextStyle(
-              //         fontSize: 32,
-              //         fontWeight: FontWeight.bold,
-              //         color: Colors.red,
-              //       ),
-              //     ),
-              //   ],
-              // )
             ],
           ),
         ),
@@ -370,72 +345,6 @@ class _PdvScreenState extends State<PdvScreen> {
       ),
     );
   }
-
-  // void atualizarProduto({required int index, required BuildContext context}) {
-  //   TextEditingController controllerEditarQuantidade = TextEditingController();
-
-  //   showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (context) => AlertDialog(
-  //       title: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         children: [
-  //           Text(selectedProducts[index].getDescription()),
-  //           IconButton(
-  //             onPressed: () {
-  //               setState(() {
-  //                 selectedProducts.removeAt(index);
-  //                 sumTotal();
-  //               });
-  //               Navigator.pop(context);
-  //             },
-  //             icon: const Icon(
-  //               Icons.delete,
-  //               color: Colors.redAccent,
-  //             ),
-  //           )
-  //         ],
-  //       ),
-  //       content: TextField(
-  //         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-  //         controller: controllerEditarQuantidade,
-  //         decoration: InputDecoration(
-  //             hintText: "Digite a nova quantidade...",
-  //             fillColor: _theme.cardColor,
-  //             filled: true,
-  //             border: InputBorder.none
-  //             // border: const OutlineInputBorder(),
-  //             ),
-  //       ),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () => Navigator.pop(context),
-  //           child: const Text(
-  //             "Cancelar",
-  //             style: TextStyle(color: Colors.red),
-  //           ),
-  //         ),
-  //         TextButton(
-  //           onPressed: () {
-  //             if (controllerEditarQuantidade.text.isNotEmpty) {
-  //               selectedProducts[index].updateAmount(
-  //                   newAmount: int.parse(controllerEditarQuantidade.text));
-  //               Navigator.pop(context);
-  //               setState(() {
-  //                 sumTotal();
-  //               });
-  //             }
-  //           },
-  //           child: const Text(
-  //             "Atualizar",
-  //             style: TextStyle(color: Colors.black),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   void sumTotal() {
     total = 0;

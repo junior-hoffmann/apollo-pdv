@@ -16,13 +16,13 @@ class VendaFinalizadaScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                 Padding(
-                   padding: const EdgeInsets.only(bottom: 40),
-                   child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: Image.asset("images/logo/logo_apollo_pdv.png"),
-                    ),
-                 ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    child: Image.asset("images/logo/logo_apollo_pdv.png"),
+                  ),
+                ),
                 Text(
                   "Venda realizada com sucesso!",
                   style: TextStyle(
@@ -46,7 +46,11 @@ class VendaFinalizadaScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: 40,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.pop(context, {
+                          "action": "new"
+                        },);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _theme.primaryColor,
                       shadowColor: Colors.transparent,
@@ -65,17 +69,24 @@ class VendaFinalizadaScreen extends StatelessWidget {
                     height: 40,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context, true);
+                        Navigator.pop(
+                          context,
+                          {"action": "home"},
+                        );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 221, 230, 217),
+                        backgroundColor:
+                            const Color.fromARGB(255, 221, 230, 217),
                         shadowColor: Colors.transparent,
                         elevation: 0,
                         shape: ContinuousRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(_theme.borderRadius)),
                       ),
-                      child:  Text("Sair para o menu", style: TextStyle(color: _theme.primaryColor),),
+                      child: Text(
+                        "Sair para o menu",
+                        style: TextStyle(color: _theme.primaryColor),
+                      ),
                     ),
                   ),
                 )
